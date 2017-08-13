@@ -81,10 +81,10 @@
   var ctx=c.getContext("2d");
   ctx.clearRect(0, 0, c.width, c.height);
   var pixelSize = 60;
-  var sizes = [30,60,100,120]; 
+  var sizes = [60,100,120]; 
 
   function colorPixels(){
-    pixelSize = sizes[Math.floor(Math.random() * 4)];
+    pixelSize = sizes[Math.floor(Math.random() * 3)];
     console.log(pixelSize);
     c.style.visibility = "hidden";
     var x = 0;
@@ -92,7 +92,7 @@
     ctx.clearRect(0, 0, c.width, c.height);
     while(y <= c.height - pixelSize && x <= c.width-pixelSize){
       ctx.fillStyle = '#'+ Math.random().toString(16).slice(-6);
-      var stripeLength = Math.floor(Math.random() * 6) + 1;
+      var stripeLength = Math.floor(Math.random() * (c.width/pixelSize)) + 1;
       
       for(var k = 0; k < stripeLength; k++){
         ctx.fillRect(x,y,pixelSize,pixelSize);
