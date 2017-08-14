@@ -38,6 +38,7 @@
     canvas{
       margin-top: 60px;
       box-shadow: 5px 5px 16px 0px rgba(171,171,171,0.82);
+      visibility: hidden;
     }
 
     #text{
@@ -63,7 +64,7 @@
   <center><a id="title" onClick="colorPixels()">instant <span>ART</span></a>
     <a onClick="drawEasterEgg()"><p id="text">Stripes!</p></a>
 
-  <div id="container"><canvas id="canvas" height="600px" width="600px"></canvas></div>
+  <div id="container"><canvas id="canvas" height="300px" width="300px"></canvas></div>
 
 </center>
 
@@ -80,13 +81,12 @@
   var c=document.getElementById("canvas");
   var ctx=c.getContext("2d");
   ctx.clearRect(0, 0, c.width, c.height);
-  var pixelSize = 60;
-  var sizes = [60,100,120]; 
+  var pixelSize = c.width/10;
+  var sizes = [c.width/10,c.width/6,c.width/3]; 
 
   function colorPixels(){
     pixelSize = sizes[Math.floor(Math.random() * 3)];
     console.log(pixelSize);
-    c.style.visibility = "hidden";
     var x = 0;
     var y = 0;
     ctx.clearRect(0, 0, c.width, c.height);
