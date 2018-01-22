@@ -62,7 +62,7 @@
 
 <body>
   <center><a id="title" onClick="colorPixels()">instant <span>ART</span></a>
-    <a onClick="drawEasterEgg()"><p id="text">Striped</a> <a onClick="saveAsPNG(c,'stripes')">patterns!</p></a>
+    <a onClick="drawEasterEgg()"><p id="text">Striped patterns!</p></a>
 
   <div id="container"><canvas id="canvas" height="300px" width="300px"></canvas></div>
 
@@ -85,6 +85,19 @@
   var sizes = [c.width/10,c.width/6,c.width/3]; 
 
   function colorPixels(){
+    var random = Math.floor(Math.random() * 2);
+    switch(random){
+      case 0:
+        colorPixelsHorizontal();
+        break;
+      case 1:
+        colorPixelsVertical();
+        break;
+
+    }
+  }
+
+  function colorPixelsHorizontal(){
     pixelSize = sizes[Math.floor(Math.random() * 3)];
     console.log(pixelSize);
     var x = 0;
@@ -108,56 +121,31 @@
     }
     setBackground(); 
   }
-    /* rythmical lines -- great random
+
+  function colorPixelsVertical(){
+    pixelSize = sizes[Math.floor(Math.random() * 3)];
+    console.log(pixelSize);
     var x = 0;
     var y = 0;
     ctx.clearRect(0, 0, c.width, c.height);
     while(y <= c.height - pixelSize && x <= c.width-pixelSize){
-      if(isBlank(x,y)){
-        ctx.fillStyle = '#'+ Math.random().toString(16).slice(-6);
-        var stripeLength = Math.floor(Math.random() * 6) + 1;
-        var orientation = Math.round(Math.random());
-        
-        for(var k = 0; k < stripeLength; k++){
-          ctx.fillRect(x,y,pixelSize,pixelSize);
-          switch(orientation){
-            case 0:
-              if(x == c.width-pixelSize){
-                x = 0;
-                y += pixelSize;
-                break;
-              } 
-              else{
-                x += pixelSize;
-              }
-              break;
-            case 1:
-              if(y == c.height - pixelSize){
-                y = 0;
-                x += pixelSize;
-                break;
-              } 
-              else{
-                y += pixelSize;
-              }
-              break;
-          }
+      ctx.fillStyle = '#'+ Math.random().toString(16).slice(-6);
+      var stripeLength = Math.floor(Math.random() * (c.width/pixelSize)) + 1;
+      
+      for(var k = 0; k < stripeLength; k++){
+        ctx.fillRect(x,y,pixelSize,pixelSize);
+        if(y == c.height-pixelSize){
+          y = 0;
+          x += pixelSize;
+          break;
+        } 
+        else{
+          y += pixelSize;
         }
       }
-      else{
-        x += pixelSize;
-      }
-
-      
     }
-
-    function isBlank(x,y){
-      var temp = ctx.getImageData(x,y,1,1);
-      if(temp.data[1] == 0 && temp.data[2] == 0 && temp.data[3] == 0){
-        return true;
-      }
-      return false;
-    }*/
+    setBackground(); 
+  }
 
   function setBackground(){
     var img = c.toDataURL();
@@ -194,6 +182,10 @@
       }
     }
     setBackground();
+  }
+
+  function download(){
+    saveAsPNG(c,'stripes');
   }
 
   function saveAsPNG(image, filename){ // No IE <11 support. Chrome URL bug for large images may crash
