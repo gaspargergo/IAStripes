@@ -10,9 +10,9 @@
       font-family: Shrikhand, cursive;
       font-size: 50px;
       color: black;
+      background-color: white;
       letter-spacing: 3px;
       margin-top: 1000px;
-      transition: all 0.5s ease-in-out;
     }
     
     span{
@@ -23,38 +23,12 @@
       cursor: pointer;
     }
 
-    #title:hover{
-      color: #ffc107;
-    }
-
-    #title:hover span{
-      color: #ff0000;
-    }
-
     center{
       margin-top: 50px;
     }
 
     canvas{
-      margin-top: 60px;
-      box-shadow: 5px 5px 16px 0px rgba(171,171,171,0.82);
       visibility:hidden;
-    }
-
-    #text{
-      position: static;
-      font-size: 14px;
-      letter-spacing: 1px;
-      font-family: Shrikhand, cursive;
-      color: red;
-      margin-left: 300px;
-      margin-top: -20px;
-      transform: rotate(-20deg);
-      transition: all 0.5s ease-in-out;
-    }
-
-    #text:hover{
-      transform: rotate(-25deg);
     }
 
     #pic{
@@ -65,8 +39,7 @@
 </head>
 
 <body>
-  <center><a id="title" onClick="colorPixels()">instant <span>ART</span></a>
-    <a onClick="drawEasterEgg()"><p id="text">Striped patterns!</p></a>
+  <center><a id="title" onClick="colorPixels()">instant ART</a>
 
   <div id="container"><canvas id="canvas" height="600px" width="600px"></canvas></div>
 
@@ -228,38 +201,6 @@
   function setBackground(){
     var img = c.toDataURL();
     document.body.style.background = "url(" +img+ ")";
-  }
-
-
-  function drawEasterEgg(){
-    var x = 0;
-    var y = 0;
-    var code ="100000000110000000011000000001010000001001000000100100000010010000001001000000100100000010001100110000110011000011001100000011000000001100000000110000000000000000000000000000000000100000000110000000011000000001010000001001000000100100000010010000001001000000100100000010001100110000110011000011001100000011000000001100000000110000000000000000000000000000000000100000000110000000011000000001010000001001000000100100000010010000001001000000100100000010001100110000110011000011001100000011000000001100000000110000000000000000000000000000000000100000000110000000011000000001010000001001000000100100000010010000001001000000100100000010001100110000110011000011001100000011000000001100000000110000000000000000000000000000000000100000000110000000011000000001010000001001000000100100000010010000001001000000100100000010001100110000110011000011001100000011000000001100000000110000000000000000000000000000000000";
-    var color1 = '#'+ Math.random().toString(16).slice(-6);
-    var color2 = '#'+ Math.random().toString(16).slice(-6);
-
-    ctx.clearRect(0, 0, c.width, c.height);
-    var pixelSize = Math.round(c.height/(Math.sqrt(code.length)));
-    for(var i = 0; i < code.length; i++){
-      switch(code[i]){
-        case '0':
-          ctx.fillStyle = color1;
-          break;
-
-        case '1':
-          ctx.fillStyle = color2;
-          break;
-      }
-      ctx.fillRect(x,y,pixelSize,pixelSize);
-      if(x >= c.width-pixelSize){
-        x = 0;
-        y += pixelSize;
-      }
-      else{
-        x += pixelSize;
-      }
-    }
-    setBackground();
   }
 
   function download(){
