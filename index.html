@@ -38,7 +38,7 @@
     canvas{
       margin-top: 60px;
       box-shadow: 5px 5px 16px 0px rgba(171,171,171,0.82);
-      visibility: hidden;
+      visibility:hidden;
     }
 
     #text{
@@ -57,6 +57,10 @@
       transform: rotate(-25deg);
     }
 
+    #pic{
+      position: fixed;
+    }
+
   </style>
 </head>
 
@@ -64,7 +68,9 @@
   <center><a id="title" onClick="colorPixels()">instant <span>ART</span></a>
     <a onClick="drawEasterEgg()"><p id="text">Striped patterns!</p></a>
 
-  <div id="container"><canvas id="canvas" height="300px" width="300px"></canvas></div>
+  <div id="container"><canvas id="canvas" height="600px" width="600px"></canvas></div>
+
+  <canvas id="pic" height="600px" width="600px"></canvas>
 
 </center>
 
@@ -95,6 +101,78 @@
         break;
 
     }
+  }
+
+  function colorPixels(){
+    switch(Math.floor(Math.random()*2)){
+      case 0:
+        colorPixelsHorizontal();
+        break;
+      case 1:
+        colorPixelsVertical();
+        break;
+    }
+    var temp = document.getElementById("pic");
+    var tempContext = temp.getContext("2d");
+
+    //drawing the pattern block in anther canvas
+    switch(Math.floor(Math.random()*4)){
+      case 0:
+        //normal, no flip
+        tempContext.drawImage(c,0,0,c.width/2,c.width/2);
+        tempContext.drawImage(c,c.width/2,0,c.width/2,c.width/2);
+        tempContext.drawImage(c,0,c.width/2,c.width/2,c.width/2);
+        tempContext.drawImage(c,c.width/2,c.width/2,c.width/2,c.width/2);
+        break;
+      case 1:
+        //simple horizontal flip
+        tempContext.save(); 
+        tempContext.drawImage(c, 0,0,temp.width/2,temp.width/2);
+        tempContext.scale(-1, 1); 
+        tempContext.drawImage(c, -temp.width,0,temp.width/2,temp.width/2); 
+
+        tempContext.drawImage(c, -temp.width,temp.width/2,temp.width/2,temp.width/2);
+        tempContext.scale(-1, 1); 
+        tempContext.drawImage(c, 0,temp.width/2,temp.width/2,temp.width/2); 
+        tempContext.restore(); 
+        break;
+      case 2:
+        //simple horizontal flip & slide
+        tempContext.save();
+        tempContext.drawImage(c, 0,0,temp.width/2,temp.width/2);
+        tempContext.scale(-1, 1); 
+        tempContext.drawImage(c, -temp.width,0,temp.width/2,temp.width/2); 
+
+        tempContext.drawImage(c, -temp.width/2,temp.width/2,temp.width/2,temp.width/2);
+        tempContext.scale(-1, 1); 
+        tempContext.drawImage(c, temp.width/2,temp.width/2,temp.width/2,temp.width/2);
+        tempContext.restore(); 
+        break;
+      case 3:
+        //horizontal & vertical flip
+        tempContext.save();
+        tempContext.drawImage(c, 0,0,temp.width/2,temp.width/2);
+        tempContext.scale(-1, 1); 
+        tempContext.drawImage(c, -temp.width,0,temp.width/2,temp.width/2); 
+
+        tempContext.scale(-1,-1);
+        tempContext.drawImage(c, 0,-temp.width,temp.width/2,temp.width/2);
+
+        tempContext.scale(-1,1);
+        tempContext.drawImage(c, -temp.width,-temp.width,temp.width/2,temp.width/2);
+        tempContext.restore(); 
+    }
+
+
+    ctx.clearRect(0,0,c.height,c.width);
+    for(var k = 0; k < 2; k++){
+      for(var i = 0; i < 2;i++){
+        ctx.drawImage(temp,300*i,k*300,300,300);
+      }
+    }
+
+    setBackground();
+
   }
 
   function colorPixelsHorizontal(){
